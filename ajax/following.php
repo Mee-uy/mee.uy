@@ -11,5 +11,3 @@
     # Si no está OK, desde dashboard.php hago un reload o algo, o vuelvo a index mostrando un error
 
 ?>
-
-following

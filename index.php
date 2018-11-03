@@ -1,10 +1,20 @@
 <?php
+    require "config.php";
+    require "misc.php";
 
-    # TODO:
-    # validate.php
-    # si está OK, voy a dashboard
-    # si no está OK, me quedo acá
+    # Validates current user session
+    $conn = validate($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
+    # OK if returned a valid connection
+    if ($conn)
+    {
+        # Close current connection, we don't need it here.
+        mysqli_close($conn);
+
+        # Move to dashboard
+        header("Location: ".$MAIN_URL."/dashboard");
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,10 +31,13 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/sweetalert2.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
     <script src="js/misc.js"></script>
+    <script src="js/forms.js"></script>
     <link rel="icon" type="image/png" href="images/favicon.png">
-
 </head>
 <body>
 
@@ -50,20 +63,25 @@
         <span class="item"><i class="fab fa-github"></i></span>
       </div>
       <div class="real_login">
-          <input id="username" class="fa-placholder" type="email" placeholder=" Usuario" id="exampleEmailInput">
-          <input id="password" class="fa-placholder" type="password" placeholder="Contraseña" id="exampleEmailInput">
+        <form id="login_regular" action="ajax/login.php">
+          <input name="username" id="username" class="fa-placholder" type="text" placeholder=" Usuario" required>
+          <input name="password" id="password" class="fa-placholder" type="password" placeholder="Contraseña" required>
+          <input type="submit" style="position: absolute; left: -9999px"/>
+        </form>
       </div>
     </div>
 
     <div class="pop">
       <div class="pop_login">
         <div class="pop_logo">
-          <img width="80px" height="20px" src="images/logo_small.png">
+          <img width="20px" height="20px" src="images/favicon.png">
         </div>
         <div class="login_form">
-          <input id="username_pop" class="fa-placholder-small u-full-width" type="email" placeholder=" Usuario" id="exampleEmailInput">
-          <input id="username_pop" class="fa-placholder-small u-full-width" type="password" placeholder="Contraseña" id="exampleEmailInput">
-          <input class="button-primary u-full-width" type="submit" value="Ingresar">
+            <form id="login_mobile" action="ajax/login.php">
+                <input name="username" id="username_pop" class="fa-placholder-small u-full-width" type="text" placeholder=" Usuario" required>
+                <input name="password" id="username_pop" class="fa-placholder-small u-full-width" type="password" placeholder="Contraseña" required>
+                <input class="button-primary u-full-width" type="submit" value="Ingresar">
+            </form>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
 RewriteEngine On
 RewriteRule ^dashboard$ core/dashboard.php [NC,L]
 RewriteRule ^dashboard/([a-zA-Z_-]*)$ core/dashboard.php$1 [NC,L]
+RewriteRule ^card/([a-zA-Z_-]*)$ core/card.php?id=$1 [NC,L]
+RewriteRule ^user/([a-zA-Z_-]*)$ core/user.php?id=$1 [NC,L]

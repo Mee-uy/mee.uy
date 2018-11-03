@@ -3,15 +3,25 @@
     require "../config.php";
     require "../misc.php";
 
-    # LLAMADO DIRECTO
+    # Validates current user session
+    $conn = validate($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
-    # validate.php
-    # si está OK, muestro info de la carta buscada
-    # si no está OK, vuelvo a index.php con error
+    # OK if returned a valid connection
+    if ($conn)
+    {
+        # Hacer acá
+        echo "OK, card";
+
+        # Close current connection
+        mysqli_close($conn);
+    }
+    else {
+        # Move to index
+        header("Location: ".$MAIN_URL);
+        die();
+    }
 
     # esto muestra información de una carta recibida por GET en primer y único parámetro
     # agregar a .htaccess ruta /card/* a este archivo
 
 ?>
-
-card
